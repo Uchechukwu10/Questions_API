@@ -59,12 +59,14 @@ def get_available_categories():
     try:
         categories = Category.query.order_by(Category.id).all()
 
-        return jsonify({
-            "success": True,
-            'categories': {
-                category.id: category.type for category in categories
-            }
-        })
+        return "Uche is here"
+
+        # return jsonify({
+        #     "success": True,
+        #     'categories': {
+        #         category.id: category.type for category in categories
+        #     }
+        # })
     except Exception:
         abort(422)
 
