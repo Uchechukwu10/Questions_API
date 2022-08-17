@@ -24,7 +24,7 @@ def paginate_questions(request, selection):
 
 
 # create and configure the app
-app = Flask(__name__, static_folder='../../frontend/build', static_url_path='/')
+app = Flask(__name__)
 setup_db(app)
 
 """
@@ -46,9 +46,6 @@ def after_request(response):
     )
     return response
 
-@app.route('/', defaults={'path':''})
-def serve(path):
-    return send_from_directory(app.static_folder, 'index.html')
 """
 @TODO:
 Create an endpoint to handle GET requests
@@ -59,14 +56,12 @@ def get_available_categories():
     try:
         categories = Category.query.order_by(Category.id).all()
 
-        return "Uche is here"
-
-        # return jsonify({
-        #     "success": True,
-        #     'categories': {
-        #         category.id: category.type for category in categories
-        #     }
-        # })
+        return jsonify({
+            "success": True,
+            'categories': {
+                category.id: category.type for category in categories
+            }
+        })
     except Exception:
         abort(422)
 
@@ -275,7 +270,13 @@ including 404 and 422.
 """
 @app.errorhandler(404)
 def not_found(error):
-    return app.send_static_file('index.html')
+    return (
+        jsonify({
+            "success": False,
+            "error": 404,
+            "message": "not found"
+        })
+    )
 
 @app.errorhandler(422)
 def unprocessable(error):
@@ -324,7 +325,7 @@ def server_error(error):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+    app.run(host='127.0.0.1', debug=False, port=os.environ.get('PORT', 5000))
 
 
 
