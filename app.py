@@ -46,6 +46,16 @@ def after_request(response):
     )
     return response
 
+@app.route("/", methods=['GET'])
+def get_home_page():
+    try:
+
+        return jsonify({
+            "success": True,
+            'message': "Welcome Home"
+        })
+    except Exception:
+        abort(422)
 """
 @TODO:
 Create an endpoint to handle GET requests
