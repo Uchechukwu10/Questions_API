@@ -6,10 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-database_name = 'trivia'
-database_path = "postgresql://{}:{}@{}/{}".format(
-    os.getenv("DATABASE_USER"), os.getenv("DATABASE_USER_PASSWORD"), "localhost:5432", database_name
-)
+# database_name = 'trivia'
+# database_path = "postgresql://{}:{}@{}/{}".format(
+#     os.getenv("DATABASE_USER"), os.getenv("DATABASE_USER_PASSWORD"), "localhost:5432", database_name
+# )
+
+database_path = os.getenv("DATABASE_URL")
 
 db = SQLAlchemy()
 
